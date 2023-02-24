@@ -4,7 +4,6 @@ go 1.20
 
 require (
 	github.com/gorilla/mux v1.8.0
-	github.com/mmorejon/microservices-docker-go-mongodb/movies v0.0.0-20230129214143-f415650ce1a7
 	go.mongodb.org/mongo-driver v1.11.2
 )
 

@@ -21,7 +21,7 @@ func (app *application) all(w http.ResponseWriter, r *http.Request) {
 		app.serverError(w, err)
 	}
 
-	app.infoLog.Println("Movies have been listed")
+	app.infoLog.Println("Products have been listed")
 
 	// Send response back
 	w.Header().Set("Content-Type", "application/json")
@@ -38,7 +38,7 @@ func (app *application) findByID(w http.ResponseWriter, r *http.Request) {
 	m, err := app.product.FindByID(id)
 	if err != nil {
 		if err.Error() == "ErrNoDocuments" {
-			app.infoLog.Println("Movie not found")
+			app.infoLog.Println("Product not found")
 			return
 		}
 		// Any other error will send an internal server error
@@ -61,7 +61,7 @@ func (app *application) findByID(w http.ResponseWriter, r *http.Request) {
 
 func (app *application) insert(w http.ResponseWriter, r *http.Request) {
 	// Define product model
-	var m models.Movie
+	var m models.Product
 	// Get request information
 	err := json.NewDecoder(r.Body).Decode(&m)
 	if err != nil {

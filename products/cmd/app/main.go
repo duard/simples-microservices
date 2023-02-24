@@ -18,10 +18,9 @@ type application struct {
 func main() {
 	dt := time.Now()
 	fmt.Println("Current date and time is: ", dt.String())
-	log.Print("starting server...")
+	log.Print("starting server...%s", dt)
 	http.HandleFunc("/", handler)
-	myMap := map[string]string{"first key": "first value", "second key": "second value", "third key": "third value", "fourth key": "fourth value", "fifth key": "fifth value"}
-	log.Print(myMap)
+
 
 	// Determine port for HTTP service.
 	port := os.Getenv("PORT")
@@ -29,6 +28,24 @@ func main() {
 		port = "5000"
 		log.Printf("defaulting to port %s", port)
 	}
+
+
+	n := 7
+	p := &n
+	c := make(chan int)
+
+
+	go func() {
+		c <- *p + 0
+	}()
+	time.Sleep(time.Second)
+	n = 8
+	log.Print(<-c)
+
+	go func() { c <- *p }()
+	time.Sleep(time.Second)
+	n = 9
+	log.Print(<-c)
 
 	// Start HTTP server...
 	log.Printf("Products listening on port http://localhost:%s", port)
