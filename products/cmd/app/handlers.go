@@ -17,6 +17,7 @@ func (app *application) all(w http.ResponseWriter, r *http.Request) {
 
 	// Convert product list into json encoding
 	b, err := json.Marshal(products)
+
 	if err != nil {
 		app.serverError(w, err)
 	}

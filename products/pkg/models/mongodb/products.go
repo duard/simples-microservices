@@ -27,6 +27,7 @@ func (m *ProductModel) All() ([]models.Product, error) {
 		return nil, err
 	}
 	err = productCursor.All(ctx, &mm)
+
 	if err != nil {
 		return nil, err
 	}
