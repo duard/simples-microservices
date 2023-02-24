@@ -1,4 +1,4 @@
-module products
+module github.com/duard/simples-microservices/products
 
 go 1.20
 

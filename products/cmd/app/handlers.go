@@ -4,19 +4,19 @@ import (
 	"encoding/json"
 	"net/http"
 
+	"github.com/duard/simples-microservices/products/pkg/models"
 	"github.com/gorilla/mux"
-	"github.com/mmorejon/microservices-docker-go-mongodb/movies/pkg/models"
 )
 
 func (app *application) all(w http.ResponseWriter, r *http.Request) {
-	// Get all movie stored
-	movies, err := app.movies.All()
+	// Get all product stored
+	products, err := app.product.All()
 	if err != nil {
 		app.serverError(w, err)
 	}
 
-	// Convert movie list into json encoding
-	b, err := json.Marshal(movies)
+	// Convert product list into json encoding
+	b, err := json.Marshal(products)
 	if err != nil {
 		app.serverError(w, err)
 	}
@@ -34,8 +34,8 @@ func (app *application) findByID(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	id := vars["id"]
 
-	// Find movie by id
-	m, err := app.movies.FindByID(id)
+	// Find product by id
+	m, err := app.product.FindByID(id)
 	if err != nil {
 		if err.Error() == "ErrNoDocuments" {
 			app.infoLog.Println("Movie not found")
@@ -45,13 +45,13 @@ func (app *application) findByID(w http.ResponseWriter, r *http.Request) {
 		app.serverError(w, err)
 	}
 
-	// Convert movie to json encoding
+	// Convert product to json encoding
 	b, err := json.Marshal(m)
 	if err != nil {
 		app.serverError(w, err)
 	}
 
-	app.infoLog.Println("Have been found a movie")
+	app.infoLog.Println("Have been found a product")
 
 	// Send response back
 	w.Header().Set("Content-Type", "application/json")
@@ -60,7 +60,7 @@ func (app *application) findByID(w http.ResponseWriter, r *http.Request) {
 }
 
 func (app *application) insert(w http.ResponseWriter, r *http.Request) {
-	// Define movie model
+	// Define product model
 	var m models.Movie
 	// Get request information
 	err := json.NewDecoder(r.Body).Decode(&m)
@@ -68,13 +68,13 @@ func (app *application) insert(w http.ResponseWriter, r *http.Request) {
 		app.serverError(w, err)
 	}
 
-	// Insert new movie
-	insertResult, err := app.movies.Insert(m)
+	// Insert new product
+	insertResult, err := app.product.Insert(m)
 	if err != nil {
 		app.serverError(w, err)
 	}
 
-	app.infoLog.Printf("New movie have been created, id=%s", insertResult.InsertedID)
+	app.infoLog.Printf("New product have been created, id=%s", insertResult.InsertedID)
 }
 
 func (app *application) delete(w http.ResponseWriter, r *http.Request) {
@@ -82,11 +82,11 @@ func (app *application) delete(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	id := vars["id"]
 
-	// Delete movie by id
-	deleteResult, err := app.movies.Delete(id)
+	// Delete product by id
+	deleteResult, err := app.product.Delete(id)
 	if err != nil {
 		app.serverError(w, err)
 	}
 
-	app.infoLog.Printf("Have been eliminated %d movie(s)", deleteResult.DeletedCount)
+	app.infoLog.Printf("Have been eliminated %d product(s)", deleteResult.DeletedCount)
 }

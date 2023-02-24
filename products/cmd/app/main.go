@@ -7,13 +7,13 @@ import (
 	"os"
 	"time"
 
-	"github.com/mmorejon/microservices-docker-go-mongodb/showtimes/pkg/models/mongodb"
+	"github.com/duard/simples-microservices/products/pkg/models/mongodb"
 )
 
 type application struct {
 	errorLog  *log.Logger
 	infoLog   *log.Logger
-	showtimes *mongodb.ShowTimeModel
+	product *mongodb.ProductModel
 }
 func main() {
 	dt := time.Now()
