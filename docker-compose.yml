@@ -38,23 +38,6 @@ services:
         protocol: tcp
         mode: host
 
-  website:
-    # build: ./website
-    image: ghcr.io/mmorejon/cinema-website:v2.2.1
-    command:
-      - "-usersAPI"
-      - "http://users:4000/api/users/"
-      - "-productsAPI"
-      - "http://products:4000/api/products/"
-      - "-showtimesAPI"
-      - "http://showtimes:4000/api/showtimes/"
-      - "-bookingsAPI"
-      - "http://bookings:4000/api/bookings/"
-    labels:
-      # Enable public access
-      - "traefik.http.routers.website.rule=PathPrefix(`/`)"
-      - "traefik.http.services.website.loadbalancer.server.port=8000"
-
   products:
     build: ./products
     # image: ghcr.io/mmorejon/cinema-products:v2.2.1
@@ -66,10 +49,10 @@ services:
     # environment:
     #   MONGODB_USERNAME: "demo"
     #   MONGODB_PASSWORD: "e3LBVTPdlzxYbxt9"
-    labels: {}
+    labels:
       # Enable public access
-      # - "traefik.http.routers.products.rule=PathPrefix(`/api/products/`)"
-      # - "traefik.http.services.products.loadbalancer.server.port=4000"
+      - "traefik.http.routers.products.rule=PathPrefix(`/api/products/`)"
+      - "traefik.http.services.products.loadbalancer.server.port=4000"
       # Apply middlewares
       # - "traefik.http.routers.products.middlewares=my-header,my-compress"
 
